@@ -34,30 +34,34 @@
     <body>
         <h3>Calculator</h3>
         <div id="container">
-            <div id="calcDisplay">07734</div>
-            <div class="calcButton">7</div>
-            <div class="calcButton">8</div>
-            <div class="calcButton">9</div>
+            <div id="calcDisplay"></div>
+            <div onclick="populateDisplay(7)" class="calcButton">7</div>
+            <div onclick="populateDisplay(8)" class="calcButton">8</div>
+            <div onclick="populateDisplay(9)" class="calcButton">9</div>
             <div class="calcButton">+</div>
-            <div class="calcButton">4</div>
-            <div class="calcButton">5</div>
-            <div class="calcButton">6</div>
+            <div onclick="populateDisplay(4)" class="calcButton">4</div>
+            <div onclick="populateDisplay(5)" class="calcButton">5</div>
+            <div onclick="populateDisplay(6)" class="calcButton">6</div>
             <div class="calcButton">-</div>
-            <div class="calcButton">1</div>
-            <div class="calcButton">2</div>
-            <div class="calcButton">3</div>
+            <div onclick="populateDisplay(1)" class="calcButton">1</div>
+            <div onclick="populateDisplay(2)" class="calcButton">2</div>
+            <div onclick="populateDisplay(3)" class="calcButton">3</div>
             <div class="calcButton">*</div>
-            <div class="calcButton">0</div>
+            <div onclick="populateDisplay(0)" class="calcButton">0</div>
             <div class="calcButton">AC</div>
             <div class="calcButton">=</div>
             <div class="calcButton">/</div>
         </div>
         <script>            
+            calcDisplay.innerHTML = '0';
             let add = (a, b) => a + b;
             let subtract = (a, b) => a - b;
             let multiply = (a, b) => a * b;
             let divide = (a, b) => a / b;
             let operate = (operator, a, b) => operator(a, b);
+            function populateDisplay(value) {
+                calcDisplay.innerHTML = value;
+            }
         </script>
     </body>
 </html>
