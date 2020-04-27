@@ -4,15 +4,48 @@
         <meta charset ="UTF-8">
         <title>Calculator</title>
         <style>
+            #container {
+                height: 500px;
+                width: 750px;
+                margin: 100px auto;
+                border: 0.5px solid black;
+            }
+            #calcDisplay {
+                margin: 50px;
+                border: 1px solid black;
+            }
+            .calcButton {
+                background-color: yellowgreen;
+                width: 15px;
+                height: 15px;
+                border: 15px solid purple;
+                padding: 25px;
+                margin: 25px;
+                text-align: center;
+                float: left;
+            }
         </style>
     </head>
     <body>
         <h3>Calculator</h3>
+        <div id="container">
+            <div class="calcButton">1</div>
+            <div class="calcButton">2</div>
+            <div class="calcButton">3</div>
+            <div class="calcButton">4</div>
+            <div class="calcButton">5</div>
+            <div class="calcButton">6</div>
+            <div class="calcButton">7</div>
+            <div class="calcButton">8</div>
+            <div class="calcButton">9</div>
+            <div class="calcButton">0</div>
+        </div>
         <script>            
             let add = (a, b) => a + b;
             let subtract = (a, b) => a - b;
             let multiply = (a, b) => a * b;
             let divide = (a, b) => a / b;
+            let operate = (operator, a, b) => operator(a, b);
         </script>
     </body>
 </html>
