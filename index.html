@@ -50,7 +50,6 @@
             }
             .calcButton:active {
                 background-color: aquamarine;
-                /* box-shadow: 5px 5px #666; */
                 transform: translate(4px, -4px);
             }
         </style>
@@ -59,42 +58,46 @@
         <div id="container">
             <div id="calcDisplay"></div>
             <div id="buttonRowContainer">
-                <div onclick="storeValues(7)" class="calcButton">7</div>
-                <div onclick="storeValues(8)" class="calcButton">8</div>
-                <div onclick="storeValues(9)" class="calcButton">9</div>
-                <div onclick="storeOperator('add')" class="calcButton calcOperationButton">+</div>
+                <div onclick="processNumber(7)" class="calcButton">7</div>
+                <div onclick="processNumber(8)" class="calcButton">8</div>
+                <div onclick="processNumber(9)" class="calcButton">9</div>
+                <div onclick="processOperator('add')" class="calcButton calcOperationButton">+</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="storeValues(4)" class="calcButton">4</div>
-                <div onclick="storeValues(5)" class="calcButton">5</div>
-                <div onclick="storeValues(6)" class="calcButton">6</div>
-                <div onclick="storeOperator('subtract')" class="calcButton calcOperationButton">-</div>
+                <div onclick="processNumber(4)" class="calcButton">4</div>
+                <div onclick="processNumber(5)" class="calcButton">5</div>
+                <div onclick="processNumber(6)" class="calcButton">6</div>
+                <div onclick="processOperator('subtract')" class="calcButton calcOperationButton">-</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="storeValues(1)" class="calcButton">1</div>
-                <div onclick="storeValues(2)" class="calcButton">2</div>
-                <div onclick="storeValues(3)" class="calcButton">3</div>
-                <div onclick="storeOperator('multiply')" class="calcButton calcOperationButton">*</div>
+                <div onclick="processNumber(1)" class="calcButton">1</div>
+                <div onclick="processNumber(2)" class="calcButton">2</div>
+                <div onclick="processNumber(3)" class="calcButton">3</div>
+                <div onclick="processOperator('multiply')" class="calcButton calcOperationButton">*</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="storeValues(0)" class="calcButton">0</div>
+                <div onclick="processNumber(0)" class="calcButton">0</div>
                 <div onclick="clearDisplay()" class="calcButton calcClearButton">AC</div>
-                <div onclick="operate(operator, x, y)" class="calcButton calcEqualsButton">=</div>
-                <div onclick="storeOperator('divide')" class="calcButton calcOperationButton">/</div>
+                <div onclick="operate(currentOperator, previousNumber, currentNumber)" 
+                        class="calcButton calcEqualsButton">=</div>
+                <div onclick="processOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
         </div>
-        <script>            
-            let x = 0;
-            let y = 0;
-            let operator;
-            calcDisplay.innerHTML = '0';
+        <script>       
+
+            let previousNumber = "";
+            let currentNumber = "";
+            let currentOperator = "";
+            let lastButtonPressed = "";
+            
+            calcDisplay.innerHTML = "0";
+            
             let add = (a, b) => a + b;
             let subtract = (a, b) => a - b;
             let multiply = (a, b) => a * b;
             let divide = (a, b) => a / b;
+            
             function operate(operator, a, b) {
-                //aNumber = Number.parseInt(a, 10);
-                //bNumber = Number.parseInt(b, 10);
                 switch (operator) {
 	                case "add": result = add(a, b); break;
 	                case "subtract": result = subtract(a, b); break;
@@ -102,28 +105,51 @@
 	                case "divide": result = divide(a, b); break
                 }
                 clearDisplay();
-                populateDisplay(result);
+                populateDisplay(result, "");
             }
+            
             function clearDisplay() {
-                x = 0;
-                y = 0;
+                previousNumber = "";
+                currentNumber = "";
+                currentOperator = "";
+                lastButtonPressed = "";
                 calcDisplay.innerHTML = "0";
             }
-            function storeValues (str) {
-                x = y;
-                y = str;
-                populateDisplay(y);
-            }
-            function storeOperator (str) {
-                operator = str;
-            }
-            function populateDisplay(value) {
-                if (calcDisplay.innerHTML === "0") {
-                    calcDisplay.innerHTML = value;
+
+            function processNumber (digit) {
+                console.log(typeof(digit));
+                console.log("first type of LBP is " + typeof(lastButtonPressed))
+                if (typeof(lastButtonPressed) === "number") {
+                    console.log("Hey! A Number!");
+                    populateDisplay(currentNumber, digit);
                 } else {
-                    calcDisplay.innerHTML = calcDisplay.innerHTML + value;
+                    console.log("This is Not a Number");
+                    previousNumber = currentNumber;
+                    currentNumber = digit;
+                    populateDisplay(currentNumber, "");
                 }
+                lastButtonPressed = digit;
+                console.log("type of LBP is " + typeof(lastButtonPressed));
+        console.log("prev# = "+ previousNumber);
+        console.log("curr# = " + currentNumber);
+        console.log("currop = " + currentOperator);
+        console.log("LBP = " + lastButtonPressed);
             }
+            
+            function processOperator (str) {
+                currentOperator = str;
+                lastButtonPressed = str;
+                console.log("type of LBP is " + typeof(lastButtonPressed));
+        console.log("prev# = "+ previousNumber);
+        console.log("curr# = " + currentNumber);
+        console.log("currop = " + currentOperator);
+        console.log("LBP = " + lastButtonPressed);
+            }
+
+            function populateDisplay(value1, value2) {
+                calcDisplay.innerHTML = value1.toString() + value2.toString();
+            }
+
         </script>
     </body>
 </html>
