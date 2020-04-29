@@ -105,7 +105,7 @@
 	                case "divide": result = divide(a, b); break
                 }
                 clearDisplay();
-                populateDisplay(result, "");
+                populateDisplay(result);
             }
             
             function clearDisplay() {
@@ -117,37 +117,23 @@
             }
 
             function processNumber (digit) {
-                console.log(typeof(digit));
-                console.log("first type of LBP is " + typeof(lastButtonPressed))
                 if (typeof(lastButtonPressed) === "number") {
-                    console.log("Hey! A Number!");
-                    populateDisplay(currentNumber, digit);
+                    currentNumber = parseInt(currentNumber.toString() + digit);
                 } else {
-                    console.log("This is Not a Number");
                     previousNumber = currentNumber;
                     currentNumber = digit;
-                    populateDisplay(currentNumber, "");
                 }
+                populateDisplay(currentNumber);
                 lastButtonPressed = digit;
-                console.log("type of LBP is " + typeof(lastButtonPressed));
-        console.log("prev# = "+ previousNumber);
-        console.log("curr# = " + currentNumber);
-        console.log("currop = " + currentOperator);
-        console.log("LBP = " + lastButtonPressed);
             }
             
             function processOperator (str) {
                 currentOperator = str;
                 lastButtonPressed = str;
-                console.log("type of LBP is " + typeof(lastButtonPressed));
-        console.log("prev# = "+ previousNumber);
-        console.log("curr# = " + currentNumber);
-        console.log("currop = " + currentOperator);
-        console.log("LBP = " + lastButtonPressed);
             }
 
-            function populateDisplay(value1, value2) {
-                calcDisplay.innerHTML = value1.toString() + value2.toString();
+            function populateDisplay(value) {
+                calcDisplay.innerHTML = value;
             }
 
         </script>
