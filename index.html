@@ -5,14 +5,14 @@
         <title>Calculator</title>
         <style>
             #container {
-                height: 700px;
-                width: 550px;
+                height: 750px;
+                width: 600px;
                 margin: 100px auto;
                 border: 20px solid black;
                 background-color: goldenrod;
             }
             #calcDisplay {
-                margin: 40px;
+                margin: 50px;
                 padding: 10px;
                 height: 50px;
                 width: auto;
@@ -21,8 +21,8 @@
                 text-align: right;
                 background-color: lightgray;
             }
-            #buttonsContainer {
-                margin: 0px auto;
+            #buttonRowContainer {
+                text-align: center;
             }
             .calcButton {
                 background-color: yellowgreen;
@@ -31,10 +31,10 @@
                 border: 15px solid purple;
                 padding: 15px;
                 margin: 15px;
-                text-align: center;
-                float: left;
+                line-height: 40px;
                 font-size: 30px;
                 font-family: Arial, Helvetica, sans-serif;
+                display: inline-block;
             }
             .calcOperationButton {
                 background-color: yellow;
@@ -58,24 +58,30 @@
     <body>
         <div id="container">
             <div id="calcDisplay"></div>
-            <div id="buttonsContainer">
-            <div onclick="storeValues(7)" class="calcButton">7</div>
-            <div onclick="storeValues(8)" class="calcButton">8</div>
-            <div onclick="storeValues(9)" class="calcButton">9</div>
-            <div onclick="storeOperator('add')" class="calcButton calcOperationButton">+</div>
-            <div onclick="storeValues(4)" class="calcButton">4</div>
-            <div onclick="storeValues(5)" class="calcButton">5</div>
-            <div onclick="storeValues(6)" class="calcButton">6</div>
-            <div onclick="storeOperator('subtract')" class="calcButton calcOperationButton">-</div>
-            <div onclick="storeValues(1)" class="calcButton">1</div>
-            <div onclick="storeValues(2)" class="calcButton">2</div>
-            <div onclick="storeValues(3)" class="calcButton">3</div>
-            <div onclick="storeOperator('multiply')" class="calcButton calcOperationButton">*</div>
-            <div onclick="storeValues(0)" class="calcButton">0</div>
-            <div onclick="clearDisplay()" class="calcButton calcClearButton">AC</div>
-            <div onclick="operate(operator, x, y)" class="calcButton calcEqualsButton">=</div>
-            <div onclick="storeOperator('divide')" class="calcButton calcOperationButton">/</div>
-        </div>
+            <div id="buttonRowContainer">
+                <div onclick="storeValues(7)" class="calcButton">7</div>
+                <div onclick="storeValues(8)" class="calcButton">8</div>
+                <div onclick="storeValues(9)" class="calcButton">9</div>
+                <div onclick="storeOperator('add')" class="calcButton calcOperationButton">+</div>
+            </div>
+            <div id="buttonRowContainer">
+                <div onclick="storeValues(4)" class="calcButton">4</div>
+                <div onclick="storeValues(5)" class="calcButton">5</div>
+                <div onclick="storeValues(6)" class="calcButton">6</div>
+                <div onclick="storeOperator('subtract')" class="calcButton calcOperationButton">-</div>
+            </div>
+            <div id="buttonRowContainer">
+                <div onclick="storeValues(1)" class="calcButton">1</div>
+                <div onclick="storeValues(2)" class="calcButton">2</div>
+                <div onclick="storeValues(3)" class="calcButton">3</div>
+                <div onclick="storeOperator('multiply')" class="calcButton calcOperationButton">*</div>
+            </div>
+            <div id="buttonRowContainer">
+                <div onclick="storeValues(0)" class="calcButton">0</div>
+                <div onclick="clearDisplay()" class="calcButton calcClearButton">AC</div>
+                <div onclick="operate(operator, x, y)" class="calcButton calcEqualsButton">=</div>
+                <div onclick="storeOperator('divide')" class="calcButton calcOperationButton">/</div>
+            </div>
         </div>
         <script>            
             let x = 0;
