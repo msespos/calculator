@@ -93,7 +93,10 @@
             let currentNumber = "";
             let currentOperator = "";
             let lastButtonPressed = "";
-            
+
+            let numbersAndOperationsStack = [];
+            let intermediateStorage = "";
+
             clearDisplay();
             
             let add = (a, b) => a + b;
@@ -119,27 +122,39 @@
             }
 
             function clearVarsAndDisplay() {
-                previousNumber = "";
-                currentNumber = "";
-                currentOperator = "";
+                numbersAndOperationsStack = [];
+                intermediateStorage = "";
                 lastButtonPressed = "";
                 calcDisplay.innerHTML = "0";
+                console.log("stack = " + numbersAndOperationsStack);
+                console.log("LBP = " + lastButtonPressed);
             }
 
             function processNumber (digit) {
-                if (typeof(lastButtonPressed) === "number") {
-                    currentNumber = parseInt(currentNumber.toString() + digit);
+                if (lastButtonPressed === "") {
+                    intermediateStorage = digit;
+                } else if (typeof(lastButtonPressed) === "number") {
+                    intermediateStorage = parseInt(intermediateStorage.toString() + digit);
                 } else {
-                    previousNumber = currentNumber;
-                    currentNumber = digit;
+                    numbersAndOperationsStack.push(intermediateStorage);
+                    intermediateStorage = digit;
                 }
-                populateDisplay(currentNumber);
+                populateDisplay(intermediateStorage);
                 lastButtonPressed = digit;
+                console.log("stack = " + numbersAndOperationsStack);
+                console.log("LBP = " + lastButtonPressed);
             }
             
             function processOperator (str) {
-                currentOperator = str;
+                if (typeof(lastButtonPressed) === "number") {
+                    numbersAndOperationsStack.push(intermediateStorage);
+                    intermediateStorage = str;
+                } else {
+                    intermediateStorage = str;
+                }
                 lastButtonPressed = str;
+                console.log("stack = " + numbersAndOperationsStack);
+                console.log("LBP = " + lastButtonPressed);
             }
 
             function populateDisplay(value) {
