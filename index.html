@@ -82,7 +82,7 @@
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(0)" class="calcButton">0</div>
                 <div onclick="clearVarsAndDisplay()" class="calcButton calcClearButton">AC</div>
-                <div onclick="operateOnStacks(numbersAndOperationsStack, calculationsStack, lastButtonPressed)"
+                <div onclick="operateOnStacks(numbersAndOperationsStack, calculationsStack, intermediateStorage)"
                         class="calcButton calcEqualsButton">=</div>
                 <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
@@ -116,12 +116,19 @@
                 calcDisplay.innerHTML = "0";
             }
 
+            function clearVars() {
+                numbersAndOperationsStack = [];
+                calculationsStack = []
+                intermediateStorage = "";
+                lastButtonPressed = "";
+            }
+
             function clearVarsAndDisplay() {
                 numbersAndOperationsStack = [];
                 calculationsStack = []
                 intermediateStorage = "";
                 lastButtonPressed = "";
-                calcDisplay.innerHTML = "0";
+                calcDisplay.innerHTML = "0";    
             }
 
             function inputNumber (digit) {
@@ -157,8 +164,8 @@
                 calcDisplay.innerHTML = value;
             }
 
-            function operateOnStacks(numbersAndOperationsStack, calculationsStack, lastButtonPressed) {
-                numbersAndOperationsStack.push(lastButtonPressed);
+            function operateOnStacks(numbersAndOperationsStack, calculationsStack, intermediateStorage) {
+                numbersAndOperationsStack.push(intermediateStorage);
                 while (numbersAndOperationsStack.length > 0) {
                     let x = numbersAndOperationsStack.shift()
                     if (typeof(x) === "number") {
@@ -193,7 +200,7 @@
                 }
                 console.log("CSCSCS = " + calculationsStack[0]);
                 populateDisplay(calculationsStack[0]);
-                clearVarsAndDisplay();
+                clearVars();
             }
 
         </script>
