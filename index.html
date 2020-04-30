@@ -62,40 +62,37 @@
         <div id="container">
             <div id="calcDisplay"></div>
             <div id="buttonRowContainer">
-                <div onclick="processNumber(7)" class="calcButton">7</div>
-                <div onclick="processNumber(8)" class="calcButton">8</div>
-                <div onclick="processNumber(9)" class="calcButton">9</div>
-                <div onclick="processOperator('add')" class="calcButton calcOperationButton">+</div>
+                <div onclick="inputNumber(7)" class="calcButton">7</div>
+                <div onclick="inputNumber(8)" class="calcButton">8</div>
+                <div onclick="inputNumber(9)" class="calcButton">9</div>
+                <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="processNumber(4)" class="calcButton">4</div>
-                <div onclick="processNumber(5)" class="calcButton">5</div>
-                <div onclick="processNumber(6)" class="calcButton">6</div>
-                <div onclick="processOperator('subtract')" class="calcButton calcOperationButton">-</div>
+                <div onclick="inputNumber(4)" class="calcButton">4</div>
+                <div onclick="inputNumber(5)" class="calcButton">5</div>
+                <div onclick="inputNumber(6)" class="calcButton">6</div>
+                <div onclick="inputOperator('subtract')" class="calcButton calcOperationButton">-</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="processNumber(1)" class="calcButton">1</div>
-                <div onclick="processNumber(2)" class="calcButton">2</div>
-                <div onclick="processNumber(3)" class="calcButton">3</div>
-                <div onclick="processOperator('multiply')" class="calcButton calcOperationButton">*</div>
+                <div onclick="inputNumber(1)" class="calcButton">1</div>
+                <div onclick="inputNumber(2)" class="calcButton">2</div>
+                <div onclick="inputNumber(3)" class="calcButton">3</div>
+                <div onclick="inputOperator('multiply')" class="calcButton calcOperationButton">*</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="processNumber(0)" class="calcButton">0</div>
+                <div onclick="inputNumber(0)" class="calcButton">0</div>
                 <div onclick="clearVarsAndDisplay()" class="calcButton calcClearButton">AC</div>
-                <div onclick="operate(currentOperator, previousNumber, currentNumber)"
+                <div onclick="operateOnStacks(numbersAndOperationsStack, calculationsStack, lastButtonPressed)"
                         class="calcButton calcEqualsButton">=</div>
-                <div onclick="processOperator('divide')" class="calcButton calcOperationButton">/</div>
+                <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
         </div>
         <script>       
 
-            let previousNumber = "";
-            let currentNumber = "";
-            let currentOperator = "";
-            let lastButtonPressed = "";
-
             let numbersAndOperationsStack = [];
-            let intermediateStorage = "";
+            let intermediateStorage = ""; //rename this
+            let calculationsStack = [];
+            let lastButtonPressed = "";
 
             clearDisplay();
             
@@ -105,16 +102,14 @@
             let divide = (a, b) => a / b;
             
             function operate(operator, a, b) {
+                let result;
                 switch (operator) {
 	                case "add": result = add(a, b); break;
 	                case "subtract": result = subtract(a, b); break;
 	                case "multiply": result = multiply(a, b); break;
 	                case "divide": result = divide(a, b); break
                 }
-                clearDisplay();
-                populateDisplay(result);
-                console.log("prev# = " + previousNumber);
-                console.log("curr# = " + currentNumber);
+                return result;
             }
             
             function clearDisplay() {
@@ -123,14 +118,13 @@
 
             function clearVarsAndDisplay() {
                 numbersAndOperationsStack = [];
+                calculationsStack = []
                 intermediateStorage = "";
                 lastButtonPressed = "";
                 calcDisplay.innerHTML = "0";
-                console.log("stack = " + numbersAndOperationsStack);
-                console.log("LBP = " + lastButtonPressed);
             }
 
-            function processNumber (digit) {
+            function inputNumber (digit) {
                 if (lastButtonPressed === "") {
                     intermediateStorage = digit;
                 } else if (typeof(lastButtonPressed) === "number") {
@@ -143,9 +137,10 @@
                 lastButtonPressed = digit;
                 console.log("stack = " + numbersAndOperationsStack);
                 console.log("LBP = " + lastButtonPressed);
+                console.log("IS = " + intermediateStorage);
             }
             
-            function processOperator (str) {
+            function inputOperator (str) {
                 if (typeof(lastButtonPressed) === "number") {
                     numbersAndOperationsStack.push(intermediateStorage);
                     intermediateStorage = str;
@@ -155,10 +150,50 @@
                 lastButtonPressed = str;
                 console.log("stack = " + numbersAndOperationsStack);
                 console.log("LBP = " + lastButtonPressed);
+                console.log("IS = " + intermediateStorage);
             }
 
             function populateDisplay(value) {
                 calcDisplay.innerHTML = value;
+            }
+
+            function operateOnStacks(numbersAndOperationsStack, calculationsStack, lastButtonPressed) {
+                numbersAndOperationsStack.push(lastButtonPressed);
+                while (numbersAndOperationsStack.length > 0) {
+                    let x = numbersAndOperationsStack.shift()
+                    if (typeof(x) === "number") {
+                        if (calculationsStack.length >= 3) {
+                            if (calculationsStack[calculationsStack.length - 1] === "multiply" ||
+                                    calculationsStack[calculationsStack.length - 1] === "divide") {
+                                let operator = calculationsStack.pop;
+                                let a = calculationsStack.pop;
+                                x = operate(operator, a, x);
+                                console.log("nAOS = " + numbersAndOperationsStack);
+                                console.log("cS = " + calculationsStack);
+                                calculationsStack.push(x);
+                            } else {
+                                calculationsStack.push(x);
+                            }
+                        } else {
+                            calculationsStack.push(x);
+                        }
+                    } else {
+                        calculationsStack.push(x);
+                    }
+                    console.log("nAOS = " + numbersAndOperationsStack);
+                    console.log("cS = " + calculationsStack);
+                                }
+                while (calculationsStack.length >= 3) {
+                    let a = calculationsStack.shift();
+                    let operator = calculationsStack.shift();
+                    let b = calculationsStack.shift();
+                    let x = operate(operator, a, b);
+                    calculationsStack.unshift(x);
+                    console.log("CSCSCS = " + calculationsStack);
+                }
+                console.log("CSCSCS = " + calculationsStack[0]);
+                populateDisplay(calculationsStack[0]);
+                clearVarsAndDisplay();
             }
 
         </script>
