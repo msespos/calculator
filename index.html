@@ -81,8 +81,8 @@
             </div>
             <div id="buttonRowContainer">
                 <div onclick="processNumber(0)" class="calcButton">0</div>
-                <div onclick="clearDisplay()" class="calcButton calcClearButton">AC</div>
-                <div onclick="operate(currentOperator, previousNumber, currentNumber)" 
+                <div onclick="clearVarsAndDisplay()" class="calcButton calcClearButton">AC</div>
+                <div onclick="operate(currentOperator, previousNumber, currentNumber)"
                         class="calcButton calcEqualsButton">=</div>
                 <div onclick="processOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
@@ -94,7 +94,7 @@
             let currentOperator = "";
             let lastButtonPressed = "";
             
-            calcDisplay.innerHTML = "0";
+            clearDisplay();
             
             let add = (a, b) => a + b;
             let subtract = (a, b) => a - b;
@@ -110,9 +110,15 @@
                 }
                 clearDisplay();
                 populateDisplay(result);
+                console.log("prev# = " + previousNumber);
+                console.log("curr# = " + currentNumber);
             }
             
             function clearDisplay() {
+                calcDisplay.innerHTML = "0";
+            }
+
+            function clearVarsAndDisplay() {
                 previousNumber = "";
                 currentNumber = "";
                 currentOperator = "";
