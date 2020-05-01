@@ -142,9 +142,6 @@
                 }
                 populateDisplay(intermediateStorage);
                 lastButtonPressed = digit;
-                console.log("stack = " + numbersAndOperationsStack);
-                console.log("LBP = " + lastButtonPressed);
-                console.log("IS = " + intermediateStorage);
             }
             
             function inputOperator (str) {
@@ -155,9 +152,6 @@
                     intermediateStorage = str;
                 }
                 lastButtonPressed = str;
-                console.log("stack = " + numbersAndOperationsStack);
-                console.log("LBP = " + lastButtonPressed);
-                console.log("IS = " + intermediateStorage);
             }
 
             function populateDisplay(value) {
@@ -169,36 +163,26 @@
                 while (numbersAndOperationsStack.length > 0) {
                     let x = numbersAndOperationsStack.shift()
                     if (typeof(x) === "number") {
-                        if (calculationsStack.length >= 3) {
-                            if (calculationsStack[calculationsStack.length - 1] === "multiply" ||
-                                    calculationsStack[calculationsStack.length - 1] === "divide") {
-                                let operator = calculationsStack.pop;
-                                let a = calculationsStack.pop;
-                                x = operate(operator, a, x);
-                                console.log("nAOS = " + numbersAndOperationsStack);
-                                console.log("cS = " + calculationsStack);
-                                calculationsStack.push(x);
-                            } else {
-                                calculationsStack.push(x);
-                            }
+                        if (calculationsStack[calculationsStack.length - 1] === "multiply" ||
+                                calculationsStack[calculationsStack.length - 1] === "divide") {
+                            let operator = calculationsStack.pop();
+                            let a = calculationsStack.pop();
+                            x = operate(operator, a, x);
+                            calculationsStack.push(x);
                         } else {
                             calculationsStack.push(x);
                         }
                     } else {
                         calculationsStack.push(x);
                     }
-                    console.log("nAOS = " + numbersAndOperationsStack);
-                    console.log("cS = " + calculationsStack);
-                                }
+                }
                 while (calculationsStack.length >= 3) {
                     let a = calculationsStack.shift();
                     let operator = calculationsStack.shift();
                     let b = calculationsStack.shift();
                     let x = operate(operator, a, b);
                     calculationsStack.unshift(x);
-                    console.log("CSCSCS = " + calculationsStack);
                 }
-                console.log("CSCSCS = " + calculationsStack[0]);
                 populateDisplay(calculationsStack[0]);
                 clearVars();
             }
