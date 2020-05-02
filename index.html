@@ -1,3 +1,5 @@
+<!-- HAVE TO FIGURE OUT HOW TO GET OPERATIONS AFTER EQUALS TO WORK -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -81,18 +83,19 @@
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(0)" class="calcButton">0</div>
-                <div onclick="clearVarsAndDisplay()" class="calcButton calcClearButton">AC</div>
-                <div onclick="operateOnStacks(numbersAndOperationsStack, calculationsStack, intermediateStorage)"
+                <div onclick="clearAll()" class="calcButton calcClearButton">AC</div>
+                <div onclick="operateOnStacks(inputStack, outputStack, lastValue)"
                         class="calcButton calcEqualsButton">=</div>
                 <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
         </div>
         <script>       
 
-            let numbersAndOperationsStack = [];
-            let intermediateStorage = ""; //rename this
-            let calculationsStack = [];
+            /* variables all need better names */
+            let inputStack = [];
+            let outputStack = [];
             let lastButtonPressed = "";
+            let lastValue = "";
 
             clearDisplay();
             
@@ -117,39 +120,37 @@
             }
 
             function clearVars() {
-                numbersAndOperationsStack = [];
-                calculationsStack = []
-                intermediateStorage = "";
+                // does not clear inputStack
+                outputStack = [];
+                lastValue = "";
                 lastButtonPressed = "";
             }
 
-            function clearVarsAndDisplay() {
-                numbersAndOperationsStack = [];
-                calculationsStack = []
-                intermediateStorage = "";
-                lastButtonPressed = "";
+            function clearAll() {
+                inputStack = [];
+                clearVars();
                 calcDisplay.innerHTML = "0";    
             }
 
             function inputNumber (digit) {
                 if (lastButtonPressed === "") {
-                    intermediateStorage = digit;
+                    lastValue = digit;
                 } else if (typeof(lastButtonPressed) === "number") {
-                    intermediateStorage = parseInt(intermediateStorage.toString() + digit);
+                    lastValue = parseInt(lastValue.toString() + digit);
                 } else {
-                    numbersAndOperationsStack.push(intermediateStorage);
-                    intermediateStorage = digit;
+                    inputStack.push(lastValue);
+                    lastValue = digit;
                 }
-                populateDisplay(intermediateStorage);
+                populateDisplay(lastValue);
                 lastButtonPressed = digit;
             }
             
             function inputOperator (str) {
                 if (typeof(lastButtonPressed) === "number") {
-                    numbersAndOperationsStack.push(intermediateStorage);
-                    intermediateStorage = str;
+                    inputStack.push(lastValue);
+                    lastValue = str;
                 } else {
-                    intermediateStorage = str;
+                    lastValue = str;
                 }
                 lastButtonPressed = str;
             }
@@ -158,38 +159,39 @@
                 calcDisplay.innerHTML = value;
             }
 
-            function operateOnStacks(numbersAndOperationsStack, calculationsStack, intermediateStorage) {
-                if (typeof(intermediateStorage) !== "number") {
+            function operateOnStacks(inputStack, outputStack, lastValue) {
+                if (typeof(lastValue) !== "number") {
                     return;
                 }
-                if (numbersAndOperationsStack.length < 2) {
+                if (inputStack.length === 0) {
                     return;
                     }
-                numbersAndOperationsStack.push(intermediateStorage);
-                while (numbersAndOperationsStack.length > 0) {
-                    let x = numbersAndOperationsStack.shift()
+                inputStack.push(lastValue);
+                while (inputStack.length > 0) {
+                    let x = inputStack.shift()
                     if (typeof(x) === "number") {
-                        if (calculationsStack[calculationsStack.length - 1] === "multiply" ||
-                                calculationsStack[calculationsStack.length - 1] === "divide") {
-                            let operator = calculationsStack.pop();
-                            let a = calculationsStack.pop();
+                        if (outputStack[outputStack.length - 1] === "multiply" ||
+                                outputStack[outputStack.length - 1] === "divide") {
+                            let operator = outputStack.pop();
+                            let a = outputStack.pop();
                             x = operate(operator, a, x);
-                            calculationsStack.push(x);
+                            outputStack.push(x);
                         } else {
-                            calculationsStack.push(x);
+                            outputStack.push(x);
                         }
                     } else {
-                        calculationsStack.push(x);
+                        outputStack.push(x);
                     }
                 }
-                while (calculationsStack.length >= 3) {
-                    let a = calculationsStack.shift();
-                    let operator = calculationsStack.shift();
-                    let b = calculationsStack.shift();
+                while (outputStack.length >= 3) {
+                    let a = outputStack.shift();
+                    let operator = outputStack.shift();
+                    let b = outputStack.shift();
                     let x = operate(operator, a, b);
-                    calculationsStack.unshift(x);
+                    outputStack.unshift(x);
                 }
-                populateDisplay(calculationsStack[0]);
+                populateDisplay(outputStack[0]);
+                inputStack[0] = outputStack[0];
                 clearVars();
             }
 
