@@ -159,6 +159,12 @@
             }
 
             function operateOnStacks(numbersAndOperationsStack, calculationsStack, intermediateStorage) {
+                if (typeof(intermediateStorage) !== "number") {
+                    return;
+                }
+                if (numbersAndOperationsStack.length < 2) {
+                    return;
+                    }
                 numbersAndOperationsStack.push(intermediateStorage);
                 while (numbersAndOperationsStack.length > 0) {
                     let x = numbersAndOperationsStack.shift()
