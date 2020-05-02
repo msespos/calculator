@@ -91,11 +91,11 @@
         </div>
         <script>       
 
-            /* variables all need better names */
             let inputStack = [];
             let outputStack = [];
             let lastButtonPressed = "";
             let lastValue = "";
+            let newValue = "";
 
             clearDisplay();
             
@@ -120,14 +120,15 @@
             }
 
             function clearVars() {
-                // does not clear inputStack
+                // does not clear newValue
+                inputStack = [];
                 outputStack = [];
                 lastValue = "";
                 lastButtonPressed = "";
             }
 
             function clearAll() {
-                inputStack = [];
+                newValue = "";
                 clearVars();
                 calcDisplay.innerHTML = "0";    
             }
@@ -143,9 +144,13 @@
                 }
                 populateDisplay(lastValue);
                 lastButtonPressed = digit;
+                console.log(inputStack);
             }
             
             function inputOperator (str) {
+                if (lastButtonPressed === "") {
+                    inputStack.push(newValue);
+                }
                 if (typeof(lastButtonPressed) === "number") {
                     inputStack.push(lastValue);
                     lastValue = str;
@@ -153,6 +158,7 @@
                     lastValue = str;
                 }
                 lastButtonPressed = str;
+                console.log(inputStack);
             }
 
             function populateDisplay(value) {
@@ -191,7 +197,7 @@
                     outputStack.unshift(x);
                 }
                 populateDisplay(outputStack[0]);
-                inputStack[0] = outputStack[0];
+                newValue = outputStack[0];
                 clearVars();
             }
 
