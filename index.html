@@ -161,6 +161,9 @@
 
             function populateDisplay(value) {
                 value = parseFloat(value.toPrecision(10));
+                if (value.toString().length > 10 && value > 1) {
+                    value = value.toExponential();
+                }
                 calcDisplay.innerHTML = value;
             }
 
