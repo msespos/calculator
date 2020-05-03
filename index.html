@@ -118,7 +118,6 @@
             }
 
             function clearVars() {
-                // does not clear newValue
                 inputStack = [];
                 outputStack = [];
                 lastValue = "";
@@ -160,9 +159,11 @@
             }
 
             function populateDisplay(value) {
-                value = parseFloat(value.toPrecision(10));
-                if (value.toString().length > 10 && value > 1) {
-                    value = value.toExponential();
+                if (value !== "Error") {
+                    value = parseFloat(value.toPrecision(10));
+                    if (Math.round(value).toString().length > 10) {
+                        value = value.toExponential();
+                    }
                 }
                 calcDisplay.innerHTML = value;
             }
@@ -182,6 +183,10 @@
                                 outputStack[outputStack.length - 1] === "divide") {
                             let operator = outputStack.pop();
                             let a = outputStack.pop();
+                            if (operator === "divide" && x === 0) {
+                                populateDisplay("Error");
+                                clearAll();
+                            }
                             x = operate(operator, a, x);
                             outputStack.push(x);
                         } else {
