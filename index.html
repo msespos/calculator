@@ -132,16 +132,18 @@
             }
 
             function inputNumber (digit) {
-                if (lastButtonPressed === "") {
-                    lastValue = digit;
-                } else if (typeof(lastButtonPressed) === "number") {
-                    lastValue = parseInt(lastValue.toString() + digit);
-                } else {
-                    inputStack.push(lastValue);
-                    lastValue = digit;
+                if (lastValue.toString().length < 10) {
+                    if (lastButtonPressed === "") {
+                        lastValue = digit;
+                    } else if (typeof(lastButtonPressed) === "number") {
+                        lastValue = parseInt(lastValue.toString() + digit);
+                    } else {
+                        inputStack.push(lastValue);
+                        lastValue = digit;
+                    }
+                    populateDisplay(lastValue);
+                    lastButtonPressed = digit;
                 }
-                populateDisplay(lastValue);
-                lastButtonPressed = digit;
             }
             
             function inputOperator (str) {
