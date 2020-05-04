@@ -98,7 +98,7 @@
             <div id="buttonRowContainer">
                 <div onclick="" class="calcButton">:)</div>
                 <div onclick="" class="calcButton">:)</div>
-                <div onclick="flipSign(lastValue)" class="calcButton calcSignButton">+/-</div>
+                <div onclick="flipSign()" class="calcButton calcSignButton">+/-</div>
                 <div onclick="addDecimal(lastButtonPressed)" class="calcButton calcDecimalButton">.</div>
             </div>
         </div>
@@ -246,11 +246,17 @@
                 clearVars();
             }
 
-            function flipSign(lastValue) {
-
+            function flipSign() {
+                if (lastValue === "") {
+                    newValue = newValue * -1;
+                    populateDisplay(newValue);
+                } else if (typeof(lastValue) === "number") {
+                    lastValue = lastValue * -1;
+                    populateDisplay(lastValue);
+                }
             }
 
-            function addDecimal(lastButtonPressed) {
+            function addDecimal() {
 
             }
 
