@@ -29,7 +29,7 @@
             }
             .calcButton {
                 cursor: pointer;
-                background-color: yellowgreen;
+                background-color: greenyellow;
                 width: 40px;
                 height: 40px;
                 border: 10px solid purple;
@@ -55,10 +55,10 @@
             }
             .calcSignButton {
                 font-size: 20px;
-                background-color: antiquewhite;
+                background-color: greenyellow;
             }
             .calcDecimalButton {
-                background-color: antiquewhite;
+                background-color: greenyellow;
             }
             .calcButton:active {
                 background-color: aquamarine;
@@ -71,35 +71,35 @@
         <div id="container">
             <div id="calcDisplay"></div>
             <div id="buttonRowContainer">
+                <div onclick="flipSign()" class="calcButton calcSignButton">+/-</div>
+                <div onclick="" class="calcButton">:)</div>
+                <div onclick="" class="calcButton">:)</div>
+                <div onclick="clearAll()" class="calcButton calcClearButton">AC</div>
+            </div>
+            <div id="buttonRowContainer">
                 <div onclick="inputNumber(7)" class="calcButton">7</div>
                 <div onclick="inputNumber(8)" class="calcButton">8</div>
                 <div onclick="inputNumber(9)" class="calcButton">9</div>
-                <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
+                <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(4)" class="calcButton">4</div>
                 <div onclick="inputNumber(5)" class="calcButton">5</div>
                 <div onclick="inputNumber(6)" class="calcButton">6</div>
-                <div onclick="inputOperator('subtract')" class="calcButton calcOperationButton">-</div>
+                <div onclick="inputOperator('multiply')" class="calcButton calcOperationButton">*</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(1)" class="calcButton">1</div>
                 <div onclick="inputNumber(2)" class="calcButton">2</div>
                 <div onclick="inputNumber(3)" class="calcButton">3</div>
-                <div onclick="inputOperator('multiply')" class="calcButton calcOperationButton">*</div>
+                <div onclick="inputOperator('subtract')" class="calcButton calcOperationButton">-</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(0)" class="calcButton">0</div>
-                <div onclick="clearAll()" class="calcButton calcClearButton">AC</div>
+                <div onclick="addDecimal(lastButtonPressed)" class="calcButton calcDecimalButton">.</div>
                 <div onclick="operateOnStacks(inputStack, outputStack, lastValue)"
                         class="calcButton calcEqualsButton">=</div>
-                <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
-            </div>
-            <div id="buttonRowContainer">
-                <div onclick="" class="calcButton">:)</div>
-                <div onclick="" class="calcButton">:)</div>
-                <div onclick="flipSign()" class="calcButton calcSignButton">+/-</div>
-                <div onclick="addDecimal(lastButtonPressed)" class="calcButton calcDecimalButton">.</div>
+                <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
             </div>
         </div>
         <script>       
@@ -111,8 +111,8 @@
             let newValue = "";  // stores the value to start new calculations after equals is pressed
             let errorFlag = ""; // stores "Error" if division by zero has just been attempted
 
-            let displayLength = 13;
-            let exponentialLength = 8;
+            let displayLength = 11;
+            let exponentialLength = 7;
 
             clearDisplay();
             
