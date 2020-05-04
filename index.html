@@ -170,7 +170,7 @@
                 if (displayValue !== "Error") {
                     displayValue = parseFloat(displayValue.toPrecision(10));
                     if (Math.round(displayValue).toString().length > 10) {
-                        displayValue = displayValue.toExponential();
+                        displayValue = displayValue.toExponential(6);
                     }
                 }
                 calcDisplay.innerHTML = displayValue;
