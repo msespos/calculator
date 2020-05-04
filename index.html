@@ -50,15 +50,11 @@
             .calcClearButton {
                 background-color: orangered;
             }
-            .calcButton:hover {
-                background-color: aquamarine;
-            }
             .calcSignButton {
                 font-size: 20px;
-                background-color: greenyellow;
             }
-            .calcDecimalButton {
-                background-color: greenyellow;
+            .calcButton:hover {
+                background-color: aquamarine;
             }
             .calcButton:active {
                 background-color: aquamarine;
@@ -96,7 +92,7 @@
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(0)" class="calcButton">0</div>
-                <div onclick="addDecimal(lastButtonPressed)" class="calcButton calcDecimalButton">.</div>
+                <div onclick="" class="calcButton">.</div>
                 <div onclick="operateOnStacks(inputStack, outputStack, lastValue)"
                         class="calcButton calcEqualsButton">=</div>
                 <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
@@ -254,10 +250,6 @@
                     lastValue = lastValue * -1;
                     populateDisplay(lastValue);
                 }
-            }
-
-            function addDecimal() {
-
             }
 
         </script>
