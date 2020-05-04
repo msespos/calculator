@@ -163,9 +163,11 @@
             }
 
             function populateDisplay(displayValue) {
+                if (displayValue !== "Error") {
                 displayValue = parseFloat(displayValue.toPrecision(10));
                 if (Math.round(displayValue).toString().length > 10) {
                         displayValue = displayValue.toExponential();
+                }
                 }
                 calcDisplay.innerHTML = displayValue;
             }
@@ -179,6 +181,10 @@
                                 outputStack[outputStack.length - 1] === "divide") {
                             let operator = outputStack.pop();
                             let a = outputStack.pop();
+                            if (x === 0) {
+                                populateDisplay("Error");
+                                return;
+                            }
                             x = operate(operator, a, x);
                             outputStack.push(x);
                         } else {
