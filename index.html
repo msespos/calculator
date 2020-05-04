@@ -12,7 +12,7 @@
                 background-color: goldenrod;
             }
             #calcDisplay {
-                margin: 50px;
+                margin: 40px 60px 50px;
                 padding: 10px;
                 height: 50px;
                 width: auto;
@@ -24,6 +24,7 @@
                 background-color: lightgray;
             }
             #buttonRowContainer {
+                margin: 10px;
                 text-align: center;
             }
             .calcButton {
@@ -31,9 +32,9 @@
                 background-color: yellowgreen;
                 width: 40px;
                 height: 40px;
-                border: 15px solid purple;
-                padding: 15px;
-                margin: 15px;
+                border: 10px solid purple;
+                padding: 10px;
+                margin: 5px;
                 line-height: 40px;
                 font-size: 30px;
                 font-family: "Courier New", Courier, monospace;
@@ -52,10 +53,18 @@
             .calcButton:hover {
                 background-color: aquamarine;
             }
+            .calcSignButton {
+                font-size: 20px;
+                background-color: antiquewhite;
+            }
+            .calcDecimalButton {
+                background-color: antiquewhite;
+            }
             .calcButton:active {
                 background-color: aquamarine;
                 transform: translate(4px, -4px);
             }
+
         </style>
     </head>
     <body>
@@ -86,15 +95,24 @@
                         class="calcButton calcEqualsButton">=</div>
                 <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
+            <div id="buttonRowContainer">
+                <div onclick="" class="calcButton">:)</div>
+                <div onclick="" class="calcButton">:)</div>
+                <div onclick="flipSign(lastValue)" class="calcButton calcSignButton">+/-</div>
+                <div onclick="addDecimal(lastButtonPressed)" class="calcButton calcDecimalButton">.</div>
+            </div>
         </div>
         <script>       
 
-            let inputStack = [];
-            let outputStack = [];
-            let lastButtonPressed = "";
-            let lastValue = "";
-            let newValue = "";
-            let errorFlag = "";
+            let inputStack = [];    // numbers and operators are loaded here as buttons are pressed
+            let outputStack = [];   // this is populated from inputStack when equals is prezssed
+            let lastButtonPressed = ""; // stores the last button pressed on the calculator
+            let lastValue = ""; // stores the last recorded value (number or operator)
+            let newValue = "";  // stores the value to start new calculations after equals is pressed
+            let errorFlag = ""; // stores "Error" if division by zero has just been attempted
+
+            let displayLength = 13;
+            let exponentialLength = 8;
 
             clearDisplay();
             
@@ -133,7 +151,7 @@
 
             function inputNumber (digit) {
                 errorFlag = "";
-                if (lastValue.toString().length < 10) {
+                if (lastValue.toString().length < displayLength) {
                     if (lastButtonPressed === "") {
                         lastValue = digit;
                     } else if (typeof(lastButtonPressed) === "number") {
@@ -168,9 +186,9 @@
 
             function populateDisplay(displayValue) {
                 if (displayValue !== "Error") {
-                    displayValue = parseFloat(displayValue.toPrecision(10));
-                    if (Math.round(displayValue).toString().length > 10) {
-                        displayValue = displayValue.toExponential(6);
+                    displayValue = parseFloat(displayValue.toPrecision(displayLength));
+                    if (Math.round(displayValue).toString().length > displayLength) {
+                        displayValue = displayValue.toExponential(exponentialLength);
                     }
                 }
                 calcDisplay.innerHTML = displayValue;
@@ -226,6 +244,14 @@
                 populateDisplay(outputStack[0]);
                 newValue = outputStack[0];
                 clearVars();
+            }
+
+            function flipSign(lastValue) {
+
+            }
+
+            function addDecimal(lastButtonPressed) {
+
             }
 
         </script>
