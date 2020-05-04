@@ -125,7 +125,7 @@
             }
 
             function clearAll() {
-                newValue = 0;
+                newValue = "";
                 clearVars();
                 clearDisplay();
             }
@@ -146,8 +146,12 @@
             }
             
             function inputOperator (str) {
-                if (lastButtonPressed === "" && newValue === 0) {
-                    inputStack.push(newValue);
+                if (lastButtonPressed === "") {
+                    if (newValue !== "") {
+                        inputStack.push(newValue);
+                    } else {
+                        return;
+                    }
                 }
                 if (typeof(lastButtonPressed) === "number") {
                     inputStack.push(lastValue);
