@@ -94,6 +94,7 @@
             let lastButtonPressed = "";
             let lastValue = "";
             let newValue = "";
+            let errorFlag = "";
 
             clearDisplay();
             
@@ -131,6 +132,7 @@
             }
 
             function inputNumber (digit) {
+                errorFlag = "";
                 if (lastValue.toString().length < 10) {
                     if (lastButtonPressed === "") {
                         lastValue = digit;
@@ -146,28 +148,30 @@
             }
             
             function inputOperator (str) {
-                if (lastButtonPressed === "") {
-                    if (newValue !== "") {
-                        inputStack.push(newValue);
-                    } else {
-                        return;
+                if (errorFlag !== "Error") {
+                    if (lastButtonPressed === "") {
+                        if (newValue !== "") {
+                            inputStack.push(newValue);
+                        } else {
+                            return;
+                        }
                     }
+                    if (typeof(lastButtonPressed) === "number") {
+                        inputStack.push(lastValue);
+                        lastValue = str;
+                    } else {
+                        lastValue = str;
+                    }
+                    lastButtonPressed = str;
                 }
-                if (typeof(lastButtonPressed) === "number") {
-                    inputStack.push(lastValue);
-                    lastValue = str;
-                } else {
-                    lastValue = str;
-                }
-                lastButtonPressed = str;
             }
 
             function populateDisplay(displayValue) {
                 if (displayValue !== "Error") {
-                displayValue = parseFloat(displayValue.toPrecision(10));
-                if (Math.round(displayValue).toString().length > 10) {
+                    displayValue = parseFloat(displayValue.toPrecision(10));
+                    if (Math.round(displayValue).toString().length > 10) {
                         displayValue = displayValue.toExponential();
-                }
+                    }
                 }
                 calcDisplay.innerHTML = displayValue;
             }
@@ -183,6 +187,7 @@
                             let a = outputStack.pop();
                             if (x === 0) {
                                 populateDisplay("Error");
+                                errorFlag = "Error";
                                 return;
                             }
                             x = operate(operator, a, x);
@@ -215,6 +220,9 @@
                 }
                 populateOutputStack(lastValue);
                 evaluateOutputStack();
+                if (errorFlag === "Error") {
+                    return;
+                }
                 populateDisplay(outputStack[0]);
                 newValue = outputStack[0];
                 clearVars();
