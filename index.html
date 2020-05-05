@@ -43,6 +43,9 @@
                 font-weight: bold;
                 display: inline-block;
             }
+            .calcWideButton {
+                width: 135px;
+            }
             .calcOperationButton {
                 background-color: yellow;
             }
@@ -50,20 +53,17 @@
                 background-color: orange;
             }
             .calcClearButton {
-                background-color: orangered;
+                background-color: lightblue;
             }
             .calcSignButton {
                 font-size: 20px;
             }
             .calcButton:hover {
-                background-color: aquamarine;
+                background-color: orangered;
             }
             .calcButton:active {
-                background-color: aquamarine;
+                background-color: orangered;
                 transform: translate(4px, -4px);
-            }
-            .blank {
-                color: greenyellow;
             }
 
         </style>
@@ -72,35 +72,33 @@
         <div id="container">
             <div id="calcDisplay"></div>
             <div id="buttonRowContainer">
+                <div onclick="clearAll()" class="calcButton calcWideButton calcClearButton">AC</div>
                 <div onclick="flipSign()" class="calcButton calcSignButton">+/-</div>
-                <div onclick="" class="calcButton blank">_</div>
-                <div onclick="" class="calcButton blank">_</div>
-                <div onclick="clearAll()" class="calcButton calcClearButton">AC</div>
+                <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(7)" class="calcButton">7</div>
                 <div onclick="inputNumber(8)" class="calcButton">8</div>
                 <div onclick="inputNumber(9)" class="calcButton">9</div>
-                <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
+                <div onclick="inputOperator('multiply')" class="calcButton calcOperationButton">*</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(4)" class="calcButton">4</div>
                 <div onclick="inputNumber(5)" class="calcButton">5</div>
                 <div onclick="inputNumber(6)" class="calcButton">6</div>
-                <div onclick="inputOperator('multiply')" class="calcButton calcOperationButton">*</div>
+                <div onclick="inputOperator('subtract')" class="calcButton calcOperationButton">-</div>
             </div>
             <div id="buttonRowContainer">
                 <div onclick="inputNumber(1)" class="calcButton">1</div>
                 <div onclick="inputNumber(2)" class="calcButton">2</div>
                 <div onclick="inputNumber(3)" class="calcButton">3</div>
-                <div onclick="inputOperator('subtract')" class="calcButton calcOperationButton">-</div>
+                <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
             </div>
             <div id="buttonRowContainer">
-                <div onclick="inputNumber(0)" class="calcButton">0</div>
-                <div onclick="" class="calcButton blank">_</div>
+                <div onclick="inputNumber(0)" class="calcButton calcWideButton">0</div>
+                <div onclick="" class="calcButton blank">.</div>
                 <div onclick="operateOnStacks(inputStack, outputStack, lastValue)"
                         class="calcButton calcEqualsButton">=</div>
-                <div onclick="inputOperator('add')" class="calcButton calcOperationButton">+</div>
             </div>
         </div>
         <script>       
