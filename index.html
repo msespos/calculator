@@ -259,7 +259,7 @@
             }
 
             function operateOnStacks(inputStack, outputStack, lastValue) {
-                if (typeof(lastValue) !== "number") {
+                if (typeof(lastValue) !== "number" && lastValue !== "") {
                     inputStack.push(lastValue);
                     lastValue = inputStack[inputStack.length - 2];
                 }
@@ -289,9 +289,8 @@
             function addDecimal() {
                 if (decimalFlag !== "Decimal") {
                     if (typeof(lastButtonPressed) === "number") {
-                        lastValue = (lastValue.toString() + ".");
+                        lastValue = (lastValue + ".");
                     } else {
-                        inputStack.push(lastValue);
                         lastValue = "0.";
                     }
                     calcDisplay.innerHTML = lastValue;
