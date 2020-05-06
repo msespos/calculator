@@ -110,13 +110,13 @@
                 if (e.keyCode === 53) {inputNumber(5)}
                 if (e.keyCode === 54) {inputNumber(6)}
                 if (e.keyCode === 55) {inputNumber(7)}
-                if (e.keyCode === 56) {inputNumber(8)}
+                if (e.keyCode === 56 && !e.shiftKey) {inputNumber(8)}
                 if (e.keyCode === 57) {inputNumber(9)}
                 if (e.keyCode === 61 && e.shiftKey) {inputOperator("add")}
                 if (e.keyCode === 173) {inputOperator("subtract")}
                 if (e.keyCode === 56 && e.shiftKey) {inputOperator("multiply")}
                 if (e.keyCode === 191) {inputOperator("divide")}
-                if (e.keyCode === 61) {operateOnStacks(inputStack, outputStack, lastValue)}
+                if (e.keyCode === 61 && !e.shiftKey) {operateOnStacks(inputStack, outputStack, lastValue)}
                 if (e.keyCode === 67) {clearAll()}
                 if (e.keyCode === 192) {flipSign()}
                 if (e.keyCode === 190) {addDecimal()}
