@@ -70,7 +70,8 @@
         <div id="container">
             <div id="calcDisplay"></div>
             <div id="buttonRowContainer">
-                <div onclick="clearAll()" class="calcButton calcWideButton calcClearButton">AC</div>
+                <div onclick="clearAll()" class="calcButton calcClearButton">AC</div>
+                <div onclick="clearLast()" class="calcButton calcClearButton">C</div>
                 <div onclick="flipSign()" class="calcButton calcSignButton">+/-</div>
                 <div onclick="inputOperator('divide')" class="calcButton calcOperationButton">/</div>
             </div>
@@ -117,7 +118,8 @@
                 if (e.keyCode === 56 && e.shiftKey) {inputOperator("multiply")}
                 if (e.keyCode === 191) {inputOperator("divide")}
                 if (e.keyCode === 61 && !e.shiftKey) {operateOnStacks(inputStack, outputStack, lastValue)}
-                if (e.keyCode === 67) {clearAll()}
+                if (e.keyCode === 65) {clearAll()}
+                if (e.keyCode === 67) {clearLast()}
                 if (e.keyCode === 192) {flipSign()}
                 if (e.keyCode === 190) {addDecimal()}
             });
@@ -167,6 +169,11 @@
             function clearAll() {
                 newValue = "";
                 clearVars();
+                clearDisplay();
+            }
+
+            function clearLast(){
+                lastValue = "";
                 clearDisplay();
             }
 
