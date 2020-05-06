@@ -260,7 +260,8 @@
 
             function operateOnStacks(inputStack, outputStack, lastValue) {
                 if (typeof(lastValue) !== "number") {
-                    return;
+                    inputStack.push(lastValue);
+                    lastValue = inputStack[inputStack.length - 2];
                 }
                 if (inputStack.length === 0) {
                     return;
