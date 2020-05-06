@@ -102,25 +102,25 @@
         <script>       
 
             document.addEventListener("keydown", (e) => {
-                if (e.keyCode === 48) {inputNumber(0)}
-                if (e.keyCode === 49) {inputNumber(1)}
-                if (e.keyCode === 50) {inputNumber(2)}
-                if (e.keyCode === 51) {inputNumber(3)}
-                if (e.keyCode === 52) {inputNumber(4)}
-                if (e.keyCode === 53) {inputNumber(5)}
-                if (e.keyCode === 54) {inputNumber(6)}
-                if (e.keyCode === 55) {inputNumber(7)}
-                if (e.keyCode === 56 && !e.shiftKey) {inputNumber(8)}
-                if (e.keyCode === 57) {inputNumber(9)}
-                if (e.keyCode === 61 && e.shiftKey) {inputOperator("add")}
-                if (e.keyCode === 173) {inputOperator("subtract")}
-                if (e.keyCode === 56 && e.shiftKey) {inputOperator("multiply")}
-                if (e.keyCode === 220) {inputOperator("divide")}
-                if (e.keyCode === 61 && !e.shiftKey) {operateOnStacks(inputStack, outputStack, lastValue)}
-                if (e.keyCode === 65) {clearAll()}
-                if (e.keyCode === 67) {clearLast()}
-                if (e.keyCode === 192) {flipSign()}
-                if (e.keyCode === 190) {addDecimal()}
+                if (e.key === "0") {inputNumber(0)}
+                if (e.key === "1") {inputNumber(1)}
+                if (e.key === "2") {inputNumber(2)}
+                if (e.key === "3") {inputNumber(3)}
+                if (e.key === "4") {inputNumber(4)}
+                if (e.key === "5") {inputNumber(5)}
+                if (e.key === "6") {inputNumber(6)}
+                if (e.key === "7") {inputNumber(7)}
+                if (e.key === "8") {inputNumber(8)}
+                if (e.key === "9") {inputNumber(9)}
+                if (e.key === "+") {inputOperator("add")}
+                if (e.key === "-") {inputOperator("subtract")}
+                if (e.key === "*") {inputOperator("multiply")}
+                if (e.key === "\\") {inputOperator("divide")}
+                if (e.key === "=") {operateOnStacks(inputStack, outputStack, lastValue)}
+                if (e.key === "a") {clearAll()}
+                if (e.key === "c") {clearLast()}
+                if (e.key === "`") {flipSign()}
+                if (e.key === ".") {addDecimal()}
             });
 
             let inputStack = [];    // numbers and operators are loaded here as buttons are pressed
