@@ -63,7 +63,6 @@
                 background-color: orangered;
                 transform: translate(4px, -4px);
             }
-
         </style>
     </head>
     <body>
@@ -123,7 +122,6 @@
                 if (e.keyCode === 192) {flipSign()}
                 if (e.keyCode === 190) {addDecimal()}
             });
-
 
             let inputStack = [];    // numbers and operators are loaded here as buttons are pressed
             let outputStack = [];   // this is populated from inputStack when equals is pressed
@@ -228,7 +226,7 @@
             function populateOutputStack(lastValue) {
                 inputStack.push(lastValue);
                 while (inputStack.length > 0) {
-                    let x = inputStack.shift()
+                    let x = inputStack.shift();
                     if (typeof(x) === "number") {
                         if (outputStack[outputStack.length - 1] === "multiply" ||
                                 outputStack[outputStack.length - 1] === "divide") {
@@ -288,11 +286,11 @@
             }
 
             function addDecimal() {
-                populateDisplay
                 if (decimalFlag !== "Decimal") {
                     if (typeof(lastButtonPressed) === "number") {
                         lastValue = (lastValue.toString() + ".");
                     } else {
+                        inputStack.push(lastValue);
                         lastValue = "0.";
                     }
                     calcDisplay.innerHTML = lastValue;
