@@ -181,7 +181,7 @@
                     if (lastButtonPressed === "") {
                         lastValue = digit;
                     } else if (lastButtonPressed === ".") {
-                        lastValue = parseFloat(lastValue + digit);
+                        lastValue = parseFloat(lastValue.toString() + digit);
                     } else if (typeof(lastButtonPressed) === "number") {
                         lastValue = parseFloat(lastValue.toString() + digit);
                     } else {
@@ -290,7 +290,10 @@
                 if (decimalFlag !== "Decimal") {
                     if (typeof(lastButtonPressed) === "number") {
                         lastValue = (lastValue + ".");
+                    } else if (lastButtonPressed === "") {
+                        lastValue = "0.";
                     } else {
+                        inputStack.push(lastValue);
                         lastValue = "0.";
                     }
                     calcDisplay.innerHTML = lastValue;
