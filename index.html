@@ -178,11 +178,13 @@
             function inputNumber (digit) {
                 errorFlag = "";
                 if (lastValue.toString().length < displayLength) {
-                    if (lastButtonPressed === "") {
+                    if (digit === 0 && decimalFlag === "Decimal") {
+                        lastValue = (lastValue.toString() + digit);
+                        calcDisplay.innerHTML = lastValue;
+                        return;
+                    } else if (lastButtonPressed === "") {
                         lastValue = digit;
-                    } else if (lastButtonPressed === ".") {
-                        lastValue = parseFloat(lastValue.toString() + digit);
-                    } else if (typeof(lastButtonPressed) === "number") {
+                    } else if (lastButtonPressed === "." || typeof(lastButtonPressed) === "number") {
                         lastValue = parseFloat(lastValue.toString() + digit);
                     } else {
                         inputStack.push(lastValue);
