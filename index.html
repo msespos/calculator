@@ -180,6 +180,7 @@
                 if (lastValue.toString().length < displayLength) {
                     if (digit === 0 && decimalFlag === "Decimal") {
                         lastValue = (lastValue.toString() + digit);
+                        lastButtonPressed = digit;
                         calcDisplay.innerHTML = lastValue;
                         return;
                     } else if (lastButtonPressed === "") {
@@ -206,6 +207,7 @@
                         }
                     }
                     if (typeof(lastButtonPressed) === "number") {
+                        lastValue = parseFloat(lastValue);
                         inputStack.push(lastValue);
                         lastValue = str;
                     } else {
@@ -261,6 +263,7 @@
             }
 
             function operateOnStacks(inputStack, outputStack, lastValue) {
+                lastValue = parseFloat(lastValue);
                 if (typeof(lastValue) !== "number" && lastValue !== "") {
                     inputStack.push(lastValue);
                     lastValue = inputStack[inputStack.length - 2];
