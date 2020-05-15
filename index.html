@@ -263,6 +263,9 @@
             }
 
             function operateOnStacks(inputStack, outputStack, lastValue) {
+                if (lastValue === "") {
+                    return;
+                }
                 lastValue = parseFloat(lastValue);
                 if (typeof(lastValue) !== "number" && lastValue !== "") {
                     inputStack.push(lastValue);
