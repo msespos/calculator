@@ -99,8 +99,9 @@
                         class="calcButton calcEqualsButton">=</div>
             </div>
         </div>
-        <script>       
+        <script>
 
+            // add keyboard support
             document.addEventListener("keydown", (e) => {
                 if (e.key === "0") {inputNumber(0)}
                 if (e.key === "1") {inputNumber(1)}
@@ -133,14 +134,15 @@
 
             const displayLength = 11; // the number of number characters allowed to be displayed
             const exponentialLength = 7;  // the number of number characters allowed in scientific notation
-
-            clearDisplay();
             
+            // functions for the four operations +, -, *, and /
             let add = (a, b) => a + b;
             let subtract = (a, b) => a - b;
             let multiply = (a, b) => a * b;
             let divide = (a, b) => a / b;
             
+            // performs the four operations +, -, *, and /
+            // used in populateOutputStack and evaluateOutputStack
             function operate(operator, a, b) {
                 let result;
                 switch (operator) {
@@ -152,10 +154,14 @@
                 return result;
             }
             
+            // used in other clear functions
+            // used when calculator is first displayed
             function clearDisplay() {
                 calcDisplay.innerHTML = "0";
             }
 
+            // used in operateOnStacks and clearAll
+            // initialize a subset of the variables
             function clearVars() {
                 inputStack = [];
                 outputStack = [];
@@ -164,17 +170,21 @@
                 decimalFlag = "";
             }
 
+            // respond to the AC button
             function clearAll() {
                 newValue = "";
                 clearVars();
                 clearDisplay();
             }
 
+            // respond to the C button
             function clearLast(){
                 lastValue = "";
                 clearDisplay();
             }
 
+            // respond to a number button
+            // push the number to inputStack when appropriate
             function inputNumber (digit) {
                 errorFlag = "";
                 if (lastValue.toString().length < displayLength) {
@@ -196,6 +206,8 @@
                 }
             }
             
+            // respond to an operator button
+            // push the operator to inputStack when appropriate
             function inputOperator (str) {
                 decimalFlag = "";
                 if (errorFlag !== "Error") {
@@ -217,6 +229,8 @@
                 }
             }
 
+            // populate the display with the appropriate length
+            // use exponential notation if appropriate
             function populateDisplay(displayValue) {
                 if (displayValue !== "Error") {
                     displayValue = parseFloat(displayValue.toPrecision(displayLength));
@@ -227,6 +241,10 @@
                 calcDisplay.innerHTML = displayValue;
             }
 
+            // called from operateOnStacks
+            // perform multiplication and division operations
+            // use the values and operators in inputStack
+            // push the remaining values and operators to outputStack
             function populateOutputStack(lastValue) {
                 inputStack.push(lastValue);
                 while (inputStack.length > 0) {
@@ -252,6 +270,9 @@
                 }
             }
 
+            // called from operateOnStacks
+            // perform addition and subtraction operations
+            // use the values and operators in outputStack
             function evaluateOutputStack() {
                 while (outputStack.length >= 3) {
                     let a = outputStack.shift();
@@ -262,6 +283,11 @@
                 }
             }
 
+            // respond to = button
+            // extract the values and operators from inputStack and lastValue
+            // store the values and operators in outputStack
+            // operate on the values
+            // display the result
             function operateOnStacks(inputStack, outputStack, lastValue) {
                 if (lastValue === "") {
                     return;
@@ -284,6 +310,8 @@
                 clearVars();
             }
 
+            // respond to +/- button
+            // add or remove a negative sign from the display and number
             function flipSign() {
                 if (lastValue === "") {
                     newValue = newValue * -1;
@@ -294,6 +322,8 @@
                 }
             }
 
+            // respond to decimal point button
+            // add a decimal point to the display and number
             function addDecimal() {
                 if (decimalFlag !== "Decimal") {
                     if (typeof(lastButtonPressed) === "number") {
@@ -309,6 +339,8 @@
                     lastButtonPressed = ".";
                 }
             }
+
+            clearDisplay();
 
         </script>
     </body>
