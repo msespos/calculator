@@ -179,8 +179,10 @@
 
             // respond to the C button
             function clearLast(){
-                lastValue = "";
-                clearDisplay();
+                if (typeof(lastValue) === "number") {
+                    lastValue = "";
+                    clearDisplay();
+                }
             }
 
             // respond to a number button
